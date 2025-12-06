@@ -10,7 +10,7 @@ Create a folder named `infra` and add the following files.
 
 ### `infra/k3d-hub.yaml`
 This cluster will host Argo CD.
-*   **Port 8080:80**: Maps host port 8080 to the load balancer, allowing you to access the Argo CD UI at `http://localhost:8080`.
+*   **Port 8080:443**: Maps host port 8080 to the load balancer's HTTPS port, allowing secure access to the Argo CD UI at `https://localhost:8080`.
 *   **Port 6443:6443**: Maps host port 6443 to the API server. This ensures your local `kubectl` can communicate with the cluster on a standard port.
 
 ```yaml
@@ -21,7 +21,7 @@ metadata:
 servers: 1
 agents: 0
 ports:
-  - port: 8080:80
+  - port: 8080:443
     nodeFilters:
       - loadbalancer
   - port: 6443:6443
@@ -46,6 +46,33 @@ ports:
     nodeFilters:
       - server:0
 network: argocd-net
+```
+
+### `infra/k3d-hub-ingress.yaml`
+This Ingress resource will expose the Argo CD server.
+*   **TLS Termination**: We configure Traefik to handle TLS (HTTPS) at the edge.
+*   **Backend**: It routes traffic to the `argocd-server` service on port 80 (HTTP). This requires us to configure Argo CD to run in insecure mode later.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server-ingress
+  namespace: argocd
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "true"
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: argocd-server
+            port:
+              number: 80
 ```
 
 ## 2. Provision the Environment
