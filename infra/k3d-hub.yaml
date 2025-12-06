@@ -17,5 +17,4 @@ options:
     timeout: "60s"
     disableLoadbalancer: false
     disableImageVolume: false
-    disableConfigFile: false
 network: argocd-net
