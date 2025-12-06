@@ -8,8 +8,4 @@ ports:
   - port: 6444:6443
     nodeFilters:
       - server:0
-options:
-  k3d:
-    wait: true
-    timeout: "60s"
 network: argocd-net
