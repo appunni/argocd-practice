@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/appunni/argocd-practice.git
     targetRevision: main
-    path: 05-gitops-workflow/overlays/production
+    path: guestbook-app/overlays/production
   destination:
     name: k3d-argo-managed
     namespace: guestbook
