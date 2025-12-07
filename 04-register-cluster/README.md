@@ -4,6 +4,14 @@ In this exercise, we will register the `k3d-argo-managed` cluster with the Argo 
 
 We will use the **Service Account Token** method, which is the standard best practice for connecting clusters in Kubernetes.
 
+### Why not use `argocd cluster add`?
+
+In a typical environment, you might use the imperative `argocd cluster add` command. However, in a local `k3d` setup, this command fails because of networking differences:
+1.  Your host machine sees the cluster at `localhost` (or `0.0.0.0`).
+2.  The Argo CD container (running inside Docker) needs to reach the cluster at its internal Docker hostname (`k3d-argo-managed-serverlb`).
+
+The CLI command automatically picks up the `localhost` address from your kubeconfig, which causes Argo CD to try connecting to itself. While we could hack the kubeconfig to fix this, using a **declarative Kubernetes Secret** is cleaner, more robust, and follows GitOps best practices.
+
 ## 1. The Strategy
 
 1.  Create a `ServiceAccount` (`argocd-manager`) on the **Managed** cluster with `cluster-admin` privileges.
