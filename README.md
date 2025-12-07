@@ -25,8 +25,11 @@ The workshop is divided into the following exercises:
 - Configure TLS and authentication.
 
 ### [05. GitOps Workflow](./05-gitops-workflow/README.md)
-- Deploy an application to the managed cluster.
+- Deploy the Nginx Demo application to the managed cluster.
 - Practice the GitOps workflow.
+
+### [06. Cleanup](./06-cleanup/README.md)
+- Destroy clusters and clean up resources.
 
 ## Getting Started
 
@@ -40,8 +43,6 @@ Follow the instructions in each folder's `README.md`.
 
 ## Cleanup
 
-To destroy the clusters and network created during this workshop, run the provided cleanup script:
+To destroy the clusters and network created during this workshop, follow the instructions in:
 
-```bash
-./cleanup.sh
-```
+[06. Cleanup](./06-cleanup/README.md)
