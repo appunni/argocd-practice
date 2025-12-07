@@ -44,12 +44,11 @@ Take a look at `05-gitops-workflow/apps/nginx-demo-prod.yaml`. You will see:
 
 ## 3. Deploy
 
-Since the files are already created, you just need to commit them to Git so Argo CD can see them.
+We assume the `nginx-demo-app` and `05-gitops-workflow` folders are already pushed and available in your remote repository. Argo CD needs to pull these files from GitHub.
 
-1.  **Commit and Push**:
+1.  **Push Changes (If any)**:
+    If you have made local changes, ensure they are pushed:
     ```bash
-    git add nginx-demo-app 05-gitops-workflow
-    git commit -m "feat: separate app source from gitops config"
     git push
     ```
 
