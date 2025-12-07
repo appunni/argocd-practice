@@ -95,9 +95,3 @@ argocd admin initial-password -n argocd
 # Password: <output from above>
 argocd login localhost:8080 --insecure
 ```
-
-## 4. Next Steps
-
-Now that Argo CD is installed and accessible, we are ready to register our managed cluster.
-
-Proceed to [Exercise 04](../04-register-cluster/README.md).
