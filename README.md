@@ -40,9 +40,3 @@ cd 01-prerequisites
 ```
 
 Follow the instructions in each folder's `README.md`.
-
-## Cleanup
-
-To destroy the clusters and network created during this workshop, follow the instructions in:
-
-[06. Cleanup](./06-cleanup/README.md)
