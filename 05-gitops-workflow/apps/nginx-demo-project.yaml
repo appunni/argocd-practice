@@ -8,7 +8,7 @@ spec:
   # Allow manifests to be pulled from any repo (or restrict to yours)
   sourceRepos:
   - '*'
-  # Only allow deploying to the managed cluster in the guestbook namespaces
+  # Only allow deploying to the managed cluster in the nginx-demo namespaces
   destinations:
   - namespace: nginx-demo
     server: https://k3d-argo-managed-serverlb:6443
