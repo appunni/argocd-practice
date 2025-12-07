@@ -17,11 +17,11 @@ brew install k3d kubectl argocd
 # Docker Desktop must be installed separately
 ```
 
-## 2. Initialize Git Repository
-You need a GitHub repository to act as the "Source of Truth" for your GitOps workflow.
+## 2. Setup Git Repository
+You need your own copy of this repository to act as the "Source of Truth" for your GitOps workflow.
 
-1.  **Create a new repository** on GitHub (e.g., `argocd-practice`).
-2.  **Clone it locally**:
+1.  **Fork this repository** on GitHub (click the "Fork" button at the top right).
+2.  **Clone your fork locally**:
     ```bash
     git clone https://github.com/YOUR_USERNAME/argocd-practice.git
     cd argocd-practice
