@@ -1,19 +1,19 @@
 # Exercise 05: GitOps Workflow
 
 ## Goal
-Deploy a sample "Guestbook" application to the `k3d-argo-managed` cluster using a proper GitOps structure.
+Deploy a sample "Nginx Demo" application to the `k3d-argo-managed` cluster using a proper GitOps structure.
 
 ## 1. The Structure
 
 To simulate a real-world GitOps scenario, we have separated the **Application Source Code** from the **Argo CD Configuration**.
 
-### A. The Application Repo (`guestbook-app/`)
+### A. The Application Repo (`nginx-demo-app/`)
 This represents the developer's repository containing the actual application manifests (Kustomize).
 
 ```text
-guestbook-app/
+nginx-demo-app/
 ├── base/                   # The "Vanilla" application
-│   └── guestbook/
+│   └── nginx-demo/
 │       ├── deployment.yaml
 │       ├── service.yaml
 │       └── kustomization.yaml
@@ -30,15 +30,15 @@ This represents the DevOps/Platform repository containing the Argo CD manifests 
 ```text
 05-gitops-workflow/
 ├── apps/
-│   ├── guestbook-project.yaml # Defines permissions (Source/Destination)
-│   ├── guestbook-dev.yaml     # The Dev Application
-│   └── guestbook-prod.yaml    # The Prod Application
+│   ├── nginx-demo-project.yaml # Defines permissions (Source/Destination)
+│   ├── nginx-demo-dev.yaml     # The Dev Application
+│   └── nginx-demo-prod.yaml    # The Prod Application
 ```
 
 ## 2. Review the Configuration
 
-Take a look at `05-gitops-workflow/apps/guestbook-prod.yaml`. You will see:
-*   **Source:** Points to the `guestbook-app/overlays/production` path in this repo.
+Take a look at `05-gitops-workflow/apps/nginx-demo-prod.yaml`. You will see:
+*   **Source:** Points to the `nginx-demo-app/overlays/production` path in this repo.
 *   **Destination:** Points to `k3d-argo-managed` (the cluster we registered in Exercise 04).
 *   **SyncPolicy:** set to `automated` (Argo CD will automatically apply changes).
 
@@ -48,7 +48,7 @@ Since the files are already created, you just need to commit them to Git so Argo
 
 1.  **Commit and Push**:
     ```bash
-    git add guestbook-app 05-gitops-workflow
+    git add nginx-demo-app 05-gitops-workflow
     git commit -m "feat: separate app source from gitops config"
     git push
     ```
@@ -59,11 +59,11 @@ Since the files are already created, you just need to commit them to Git so Argo
     kubectl config use-context k3d-argo-hub
     
     # 1. Apply the Project first (Updated to allow dev namespace)
-    kubectl apply -f 05-gitops-workflow/apps/guestbook-project.yaml
+    kubectl apply -f 05-gitops-workflow/apps/nginx-demo-project.yaml
 
     # 2. Apply the Applications
-    kubectl apply -f 05-gitops-workflow/apps/guestbook-prod.yaml
-    kubectl apply -f 05-gitops-workflow/apps/guestbook-dev.yaml
+    kubectl apply -f 05-gitops-workflow/apps/nginx-demo-prod.yaml
+    kubectl apply -f 05-gitops-workflow/apps/nginx-demo-dev.yaml
     ```
 
 3.  **Verify**:
@@ -75,6 +75,6 @@ Since the files are already created, you just need to commit them to Git so Argo
 ## 4. Test the GitOps Loop (Optional)
 
 To see GitOps in action:
-1.  Edit `guestbook-app/base/guestbook/deployment.yaml` and change `replicas: 1` to `replicas: 3`.
+1.  Edit `nginx-demo-app/base/nginx-demo/deployment.yaml` and change `replicas: 1` to `replicas: 3`.
 2.  Commit and push the change.
 3.  Watch Argo CD detect the drift and automatically sync the change (scale up the pods).
