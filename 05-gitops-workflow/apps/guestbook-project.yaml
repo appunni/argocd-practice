@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: guestbook-project
+  namespace: argocd
+spec:
+  description: "Project for Guestbook Application"
+  # Allow manifests to be pulled from any repo (or restrict to yours)
+  sourceRepos:
+  - '*'
+  # Only allow deploying to the managed cluster in the guestbook namespace
+  destinations:
+  - namespace: guestbook
+    server: https://k3d-argo-managed-serverlb:6443
+  # Allow creating Namespaces (since we use CreateNamespace=true)
+  clusterResourceWhitelist:
+  - group: ''
+    kind: Namespace
