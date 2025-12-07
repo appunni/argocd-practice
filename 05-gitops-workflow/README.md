@@ -57,7 +57,7 @@ We assume the `nginx-demo-app` and `05-gitops-workflow` folders are already push
     ```bash
     kubectl config use-context k3d-argo-hub
     
-    # 1. Apply the Project first (Updated to allow dev namespace)
+    # 1. Apply the Project first
     kubectl apply -f 05-gitops-workflow/apps/nginx-demo-project.yaml
 
     # 2. Apply the Applications
