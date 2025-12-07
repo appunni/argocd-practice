@@ -11,7 +11,6 @@ The configuration files are located in this directory.
 ### `k3d-hub.yaml`
 This cluster will host Argo CD.
 *   **Port 8080:443**: Maps host port 8080 to the load balancer's HTTPS port, allowing secure access to the Argo CD UI at `https://localhost:8080`.
-*   **Port 6443:6443**: Maps host port 6443 to the API server. This ensures your local `kubectl` can communicate with the cluster on a standard port.
 
 ```yaml
 apiVersion: k3d.io/v1alpha5
@@ -24,15 +23,11 @@ ports:
   - port: 8080:443
     nodeFilters:
       - loadbalancer
-  - port: 6443:6443
-    nodeFilters:
-      - server:0
 network: argocd-net
 ```
 
 ### `k3d-managed.yaml`
 This cluster will be managed by Argo CD.
-*   **Port 6444:6443**: Maps host port 6444 to the API server. We use a different port here to avoid a conflict with the Hub cluster (which is using 6443).
 
 ```yaml
 apiVersion: k3d.io/v1alpha5
@@ -41,10 +36,6 @@ metadata:
   name: argo-managed
 servers: 1
 agents: 0
-ports:
-  - port: 6444:6443
-    nodeFilters:
-      - server:0
 network: argocd-net
 ```
 
