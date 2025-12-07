@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook-dev
+  namespace: argocd
+spec:
+  project: guestbook-project
+  source:
+    repoURL: https://github.com/appunni/argocd-practice.git
+    targetRevision: main
+    path: guestbook-app/overlays/dev
+  destination:
+    name: k3d-argo-managed
+    namespace: guestbook-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

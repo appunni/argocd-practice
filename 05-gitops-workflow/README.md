@@ -18,8 +18,10 @@ guestbook-app/
 │       ├── service.yaml
 │       └── kustomization.yaml
 └── overlays/               # Environment-specific modifications
+    ├── dev/
+    │   └── kustomization.yaml # Adds "dev-" prefix, 1 replica
     └── production/
-        └── kustomization.yaml # Adds "prod-" prefix and labels
+        └── kustomization.yaml # Adds "prod-" prefix, labels
 ```
 
 ### B. The GitOps Repo (`05-gitops-workflow/`)
@@ -29,7 +31,8 @@ This represents the DevOps/Platform repository containing the Argo CD manifests 
 05-gitops-workflow/
 ├── apps/
 │   ├── guestbook-project.yaml # Defines permissions (Source/Destination)
-│   └── guestbook-prod.yaml    # The Application itself
+│   ├── guestbook-dev.yaml     # The Dev Application
+│   └── guestbook-prod.yaml    # The Prod Application
 ```
 
 ## 2. Review the Configuration
@@ -55,17 +58,18 @@ Since the files are already created, you just need to commit them to Git so Argo
     ```bash
     kubectl config use-context k3d-argo-hub
     
-    # 1. Apply the Project first
+    # 1. Apply the Project first (Updated to allow dev namespace)
     kubectl apply -f 05-gitops-workflow/apps/guestbook-project.yaml
 
-    # 2. Apply the Application
+    # 2. Apply the Applications
     kubectl apply -f 05-gitops-workflow/apps/guestbook-prod.yaml
+    kubectl apply -f 05-gitops-workflow/apps/guestbook-dev.yaml
     ```
 
 3.  **Verify**:
     Check the Argo CD UI (localhost:8080) or CLI.
     ```bash
-    argocd app get guestbook-prod
+    argocd app list
     ```
 
 ## 4. Test the GitOps Loop (Optional)

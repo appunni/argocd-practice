@@ -8,9 +8,11 @@ spec:
   # Allow manifests to be pulled from any repo (or restrict to yours)
   sourceRepos:
   - '*'
-  # Only allow deploying to the managed cluster in the guestbook namespace
+  # Only allow deploying to the managed cluster in the guestbook namespaces
   destinations:
   - namespace: guestbook
+    server: https://k3d-argo-managed-serverlb:6443
+  - namespace: guestbook-dev
     server: https://k3d-argo-managed-serverlb:6443
   # Allow creating Namespaces (since we use CreateNamespace=true)
   clusterResourceWhitelist:
