@@ -56,17 +56,6 @@ sed "s|\${BEARER_TOKEN}|$BEARER_TOKEN|g" cluster-secret.yaml | kubectl apply -f 
 Verify that the cluster is registered in Argo CD:
 
 ```bash
-# Check the secret exists
-kubectl -n argocd get secrets -l argocd.argoproj.io/secret-type=cluster
-
-# (Optional) If you have the CLI installed and logged in:
-# argocd cluster list
-``` if not already there
-kubectl config use-context k3d-argo-hub
-
-# Check the secret exists
-kubectl get secrets -n argocd -l argocd.argoproj.io/secret-type=cluster
-
 # Check via Argo CD CLI (if logged in)
 argocd cluster list
 ```
