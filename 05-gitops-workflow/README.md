@@ -76,4 +76,5 @@ We assume the `nginx-demo-app` and `05-gitops-workflow` folders are already push
 To see GitOps in action:
 1.  Edit `nginx-demo-app/base/nginx-demo/deployment.yaml` and change `replicas: 1` to `replicas: 3`.
 2.  Commit and push the change.
-3.  Watch Argo CD detect the drift and automatically sync the change (scale up the pods).
+3.  Watch the **nginx-demo-prod** application in Argo CD. It will detect the drift and automatically sync the change (scale up to 3 pods).
+    > **Note:** The `nginx-demo-dev` application will remain at 1 replica because its overlay explicitly overrides this setting.
