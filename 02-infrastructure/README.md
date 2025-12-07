@@ -1,4 +1,4 @@
-# Exercise 02: Infrastructure as Code
+# Exercise 02: Infrastructure Setup
 
 ## Goal
 Provision two Kubernetes clusters on a shared Docker network using declarative configuration files:
