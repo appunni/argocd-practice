@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArgoCD Practice Workshop</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* Custom scrollbar for sidebar */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 h-screen flex overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-slate-900 text-white flex-shrink-0 flex flex-col h-full">
+        <div class="p-6 border-b border-slate-800">
+            <h1 class="text-xl font-bold tracking-wider text-blue-400">ArgoCD<span class="text-white">Practice</span></h1>
+            <p class="text-xs text-slate-400 mt-1">GitOps Workshop Guide</p>
+        </div>
+        
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1 px-3">
+                <li>
+                    <button onclick="loadContent('README.md')" class="w-full text-left px-4 py-2.5 rounded-lg hover:bg-slate-800 transition-colors flex items-center gap-3 text-sm font-medium group focus:outline-none focus:bg-slate-800">
+                        <span class="w-6 h-6 rounded bg-blue-500/10 text-blue-400 flex items-center justify-center text-xs font-bold group-hover:bg-blue-500 group-hover:text-white transition-colors">H</span>
+                        Overview
+                    </button>
+                </li>
+                <li>
+                    <button onclick="loadContent('01-prerequisites/README.md')" class="w-full text-left px-4 py-2.5 rounded-lg hover:bg-slate-800 transition-colors flex items-center gap-3 text-sm font-medium group focus:outline-none focus:bg-slate-800">
+                        <span class="w-6 h-6 rounded bg-slate-800 text-slate-400 flex items-center justify-center text-xs font-bold group-hover:bg-blue-500 group-hover:text-white transition-colors">01</span>
+                        Prerequisites
+                    </button>
+                </li>
+                <li>
+                    <button onclick="loadContent('02-infrastructure/README.md')" class="w-full text-left px-4 py-2.5 rounded-lg hover:bg-slate-800 transition-colors flex items-center gap-3 text-sm font-medium group focus:outline-none focus:bg-slate-800">
+                        <span class="w-6 h-6 rounded bg-slate-800 text-slate-400 flex items-center justify-center text-xs font-bold group-hover:bg-blue-500 group-hover:text-white transition-colors">02</span>
+                        Infrastructure
+                    </button>
+                </li>
+                <li>
+                    <button onclick="loadContent('03-argocd-setup/README.md')" class="w-full text-left px-4 py-2.5 rounded-lg hover:bg-slate-800 transition-colors flex items-center gap-3 text-sm font-medium group focus:outline-none focus:bg-slate-800">
+                        <span class="w-6 h-6 rounded bg-slate-800 text-slate-400 flex items-center justify-center text-xs font-bold group-hover:bg-blue-500 group-hover:text-white transition-colors">03</span>
+                        ArgoCD Setup
+                    </button>
+                </li>
+                <li>
+                    <button onclick="loadContent('04-register-cluster/README.md')" class="w-full text-left px-4 py-2.5 rounded-lg hover:bg-slate-800 transition-colors flex items-center gap-3 text-sm font-medium group focus:outline-none focus:bg-slate-800">
+                        <span class="w-6 h-6 rounded bg-slate-800 text-slate-400 flex items-center justify-center text-xs font-bold group-hover:bg-blue-500 group-hover:text-white transition-colors">04</span>
+                        Register Cluster
+                    </button>
+                </li>
+                <li>
+                    <button onclick="loadContent('05-gitops-workflow/README.md')" class="w-full text-left px-4 py-2.5 rounded-lg hover:bg-slate-800 transition-colors flex items-center gap-3 text-sm font-medium group focus:outline-none focus:bg-slate-800">
+                        <span class="w-6 h-6 rounded bg-slate-800 text-slate-400 flex items-center justify-center text-xs font-bold group-hover:bg-blue-500 group-hover:text-white transition-colors">05</span>
+                        GitOps Workflow
+                    </button>
+                </li>
+                <li>
+                    <button onclick="loadContent('06-cleanup/README.md')" class="w-full text-left px-4 py-2.5 rounded-lg hover:bg-slate-800 transition-colors flex items-center gap-3 text-sm font-medium group focus:outline-none focus:bg-slate-800">
+                        <span class="w-6 h-6 rounded bg-slate-800 text-slate-400 flex items-center justify-center text-xs font-bold group-hover:bg-blue-500 group-hover:text-white transition-colors">06</span>
+                        Cleanup
+                    </button>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="p-4 border-t border-slate-800 text-xs text-slate-500 text-center">
+            <a href="https://github.com/devajith/argocd-practice" target="_blank" class="flex items-center justify-center gap-2 hover:text-blue-400 transition-colors">
+                <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+                View on GitHub
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto bg-white relative">
+        <div class="max-w-4xl mx-auto px-8 py-12">
+            <div id="content" class="prose prose-slate prose-lg max-w-none prose-headings:text-slate-800 prose-a:text-blue-600 hover:prose-a:text-blue-500 prose-pre:bg-slate-900 prose-pre:text-slate-50">
+                <!-- Content will be loaded here -->
+                <div class="animate-pulse space-y-4">
+                    <div class="h-4 bg-slate-200 rounded w-3/4"></div>
+                    <div class="h-4 bg-slate-200 rounded"></div>
+                    <div class="h-4 bg-slate-200 rounded"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Configure Marked
+        marked.use({
+            gfm: true,
+            breaks: true
+        });
+
+        let currentRequestId = 0;
+
+        // Helper to normalize paths (resolve .. and .)
+        function normalizePath(path) {
+            const parts = path.split('/');
+            const stack = [];
+            for (const part of parts) {
+                if (part === '..') stack.pop();
+                else if (part !== '.' && part !== '') stack.push(part);
+            }
+            return stack.join('/');
+        }
+
+        async function loadContent(rawPath) {
+            // Normalize path to ensure highlighting works even with relative links (../)
+            const path = normalizePath(rawPath);
+            
+            const contentDiv = document.getElementById('content');
+            const requestId = ++currentRequestId;
+            
+            try {
+                const response = await fetch(path);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                const markdown = await response.text();
+                
+                // If a newer request has started, ignore this result
+                if (requestId !== currentRequestId) return;
+
+                // Determine base path for relative links
+                // e.g., "01-prerequisites/README.md" -> "01-prerequisites/"
+                const basePath = path.includes('/') ? path.substring(0, path.lastIndexOf('/') + 1) : '';
+                
+                // Custom renderer to fix relative links and intercept clicks
+                const renderer = new marked.Renderer();
+                
+                // Fix links
+                const originalLink = renderer.link.bind(renderer);
+                renderer.link = (href, title, text) => {
+                    let resolvedHref = href;
+
+                    // Ensure href is a string
+                    if (!href || typeof href !== 'string') {
+                        return originalLink(href, title, text);
+                    }
+
+                    // 1. Handle relative links
+                    if (!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('/')) {
+                        resolvedHref = basePath + href;
+                    }
+
+                    // 2. Intercept Markdown links (.md) to load via SPA
+                    if (resolvedHref && resolvedHref.endsWith('.md')) {
+                        const safeHref = resolvedHref.replace(/'/g, "\\'");
+                        return `<a href="javascript:void(0)" onclick="loadContent('${safeHref}')" title="${title || ''}" class="text-blue-600 hover:text-blue-800 hover:underline">${text}</a>`;
+                    }
+
+                    // 3. External links -> new tab
+                    if (resolvedHref && resolvedHref.startsWith('http')) {
+                         return `<a href="${resolvedHref}" target="_blank" rel="noopener noreferrer" title="${title || ''}" class="text-blue-600 hover:text-blue-800 hover:underline">${text} <span class="text-xs">↗</span></a>`;
+                    }
+
+                    // Default behavior
+                    return originalLink(resolvedHref, title, text);
+                };
+
+                // Fix images
+                const originalImage = renderer.image.bind(renderer);
+                renderer.image = (href, title, text) => {
+                    // Ensure href is a string before checking startsWith
+                    if (href && typeof href === 'string' && !href.startsWith('http') && !href.startsWith('/')) {
+                        // It's a relative image
+                        return originalImage(basePath + href, title, text);
+                    }
+                    return originalImage(href, title, text);
+                };
+
+                // Convert markdown to HTML using the custom renderer
+                contentDiv.innerHTML = marked.parse(markdown, { renderer: renderer });
+                
+                // Highlight active nav item
+                document.querySelectorAll('nav button').forEach(btn => {
+                    // Reset all buttons
+                    btn.classList.remove('bg-slate-800', 'text-white');
+                    const icon = btn.querySelector('span');
+                    icon.classList.remove('bg-blue-500', 'text-white');
+                    icon.classList.add('bg-slate-800', 'text-slate-400');
+                    
+                    // Check if this is the active button
+                    // We wrap path in quotes to avoid partial matches (e.g. 'README.md' matching '01/README.md')
+                    if (btn.getAttribute('onclick').includes(`'${path}'`)) {
+                        btn.classList.add('bg-slate-800', 'text-white');
+                        icon.classList.remove('bg-slate-800', 'text-slate-400');
+                        icon.classList.add('bg-blue-500', 'text-white');
+                    }
+                });
+
+                // Scroll to top
+                document.querySelector('main').scrollTop = 0;
+
+            } catch (error) {
+                // If a newer request has started, ignore this error
+                if (requestId !== currentRequestId) return;
+
+                contentDiv.innerHTML = `
+                    <div class="p-4 bg-red-50 text-red-600 rounded-lg border border-red-100">
+                        <h3 class="font-bold">Error Loading Content</h3>
+                        <p>Could not load ${path}.</p>
+                        <p class="text-sm mt-2 text-red-500 font-mono">${error.message}</p>
+                        <p class="text-xs mt-2 text-slate-500">Please ensure you are running this via a local server (python3 -m http.server) or GitHub Pages.</p>
+                    </div>
+                `;
+                console.error('Load content error:', error);
+            }
+        }
+
+        // Load initial content
+        loadContent('README.md');
+    </script>
+</body>
+</html>
